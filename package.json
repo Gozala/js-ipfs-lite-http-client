@@ -1,5 +1,5 @@
 {
-  "name": "js-ipfs-lite-http-client",
+  "name": "ipfs-lite-http-client",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
