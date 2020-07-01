@@ -7,7 +7,9 @@ export class MultipartData {
   constructor(options = {}) {
     this.boundary =
       options.boundary ||
-      `-----IPFSBlobServiceBoundery${Math.random().toString(32).slice(2)}`
+      `----IPFSBlobServiceBoundery${Math.random()
+        .toString(32)
+        .slice(2)}`.toLowerCase()
 
     /** @type {Blob[]} */
     this.parts = []
@@ -55,9 +57,9 @@ export class MultipartData {
     for (const part of this.parts) {
       if (!first) {
         chunks.push("\r\n")
-        chunks.push(part)
         first = false
       }
+      chunks.push(part)
     }
     chunks.push(`\r\n--${this.boundary}--\r\n`)
     return new Blob(chunks, {

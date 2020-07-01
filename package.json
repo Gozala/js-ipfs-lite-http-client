@@ -2,6 +2,7 @@
   "name": "ipfs-lite-http-client",
   "version": "0.0.1",
   "type": "module",
+  "main": "./src/lib.js",
   "scripts": {
     "build": "rollup --config rollup.config.js",
     "prepublishOnly": "npm run build"

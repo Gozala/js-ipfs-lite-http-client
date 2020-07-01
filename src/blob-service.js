@@ -77,36 +77,36 @@ export class BlobService {
       searchParams.set("progress", "true")
     }
 
-    if (trickle) {
-      searchParams.set("trickle", "true")
+    if (trickle != null) {
+      searchParams.set("trickle", trickle.toString())
     }
 
-    if (onlyHash) {
-      searchParams.set("only-hash", "true")
+    if (onlyHash != null) {
+      searchParams.set("only-hash", onlyHash.toString())
     }
 
-    if (wrapWithDirectory) {
-      searchParams.set("wrap-with-directory", "true")
+    if (wrapWithDirectory != null) {
+      searchParams.set("wrap-with-directory", wrapWithDirectory.toString())
     }
 
     if (chunker) {
       searchParams.set("chunker", chunker)
     }
 
-    if (pin) {
-      searchParams.set("pin", "true")
+    if (pin != null) {
+      searchParams.set("pin", pin.toString())
     }
 
-    if (rawLeaves) {
-      searchParams.set("raw-leaves", "true")
+    if (rawLeaves != null) {
+      searchParams.set("raw-leaves", rawLeaves.toString())
     }
 
-    if (cidVersion) {
-      searchParams.set("cid-version", "true")
+    if (cidVersion != null) {
+      searchParams.set("cid-version", cidVersion.toString())
     }
 
     if (hashAlg) {
-      searchParams.set("hashAlg", "true")
+      searchParams.set("hashAlg", hashAlg)
     }
 
     const body = new MultipartData()
@@ -131,7 +131,9 @@ export class BlobService {
       return text
         .trim()
         .split("\n")
-        .map((line) => decodeAddEntry(JSON.parse(line)))
+        .map((line) => JSON.parse(line))
+        .filter((data) => data.Hash != null)
+        .map(decodeAddEntry)
     } else {
       throw new Error(response.statusText)
     }

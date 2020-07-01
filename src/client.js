@@ -21,16 +21,25 @@ export class Client {
    * @property {number} [timeout]
    * @property {URLSearchParams} [searchParams]
    * @property {function({total:number, loaded:number}):void} [progress]
+   * @property {string} [overrideMimeType]
    * @returns {Promise<Response>}
    */
   fetch(resource, options = {}) {
     const url = new URL(resource, this.url)
+    if (options.searchParams) {
+      url.search = options.searchParams.toString()
+    }
+
     const request = new XMLHttpRequest()
     request.open(options.method || "GET", url.toString(), true)
 
     const timeout = options.timeout != null ? options.timeout : this.timeout
     if (timeout > 0 && timeout < Infinity) {
       request.timeout = options.timeout
+    }
+
+    if (options.overrideMimeType != null) {
+      request.overrideMimeType(options.overrideMimeType)
     }
 
     for (const [name, value] of this.headers.entries()) {
